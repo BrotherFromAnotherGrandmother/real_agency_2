@@ -11,6 +11,7 @@ class Flat(models.Model):
         default=timezone.now,
         db_index=True)
     new_building = models.BooleanField(null=True)
+    liked_by = models.ManyToManyField(User, verbose_name='Кто лайкнул', related_name='liked_flats')
 
     description = models.TextField('Текст объявления', blank=True)
     price = models.IntegerField('Цена квартиры', db_index=True)
