@@ -5,13 +5,12 @@ import phonenumbers
 def phone_number_conversion(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
-        pure_phone = phonenumbers.parse(f"{flat.owners_phonenumber}", 'RU')
+        phonenumber_to_str = f"{flat.owners_phonenumber}"
+        pure_phone = phonenumbers.parse(phonenumber_to_str, 'RU')
+        flat.owner_pure_phone = None
         if phonenumbers.is_valid_number(pure_phone):
             flat.owner_pure_phone = phonenumbers.format_number(pure_phone, phonenumbers.PhoneNumberFormat.E164)
-            flat.save()
-        else:
-            flat.owner_pure_phone = None
-            flat.save()
+        flat.save()
 
 class Migration(migrations.Migration):
 
