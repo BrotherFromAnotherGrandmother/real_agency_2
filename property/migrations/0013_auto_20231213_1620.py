@@ -7,7 +7,8 @@ def owners_fill(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
 
-    for owner in Owner.objects.all():
+    owner_objects = Owner.objects.all().iterator()
+    for owner in owner_objects:
         owner.flats.set(Flat.objects.filter(owner=owner.name))
 
 

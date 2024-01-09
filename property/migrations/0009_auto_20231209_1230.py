@@ -4,7 +4,8 @@ from django.db import migrations
 import phonenumbers
 def phone_number_conversion(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    for flat in Flat.objects.all():
+    flat_objects = Flat.objects.all().iterator()
+    for flat in flat_objects:
         phonenumber_to_str = f"{flat.owners_phonenumber}"
         pure_phone = phonenumbers.parse(phonenumber_to_str, 'RU')
         flat.owner_pure_phone = None
